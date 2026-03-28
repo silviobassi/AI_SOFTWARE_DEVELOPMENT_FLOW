@@ -104,7 +104,7 @@ flowchart TD
 O fluxo é **escalável**. Para projetos pequenos, algumas etapas são opcionais:
 
 | Etapa | Projeto Pequeno | Projeto Médio | Projeto Grande |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | PRD Alto Nível | Opcional | ✅ | ✅ |
 | PRD Técnico | ✅ Simplificado | ✅ | ✅ Completo |
 | Diagramas | Opcional | ✅ Principais | ✅ Todos |
@@ -133,6 +133,7 @@ flowchart LR
 ```
 
 **Regra de ouro para economizar tokens:**
+
 - `CLAUDE.md` = o que **sempre** vale → stack, padrões, anti-padrões, estrutura de pastas
 - `Spec` = o que vale **para a feature** → requisitos, aceite, dependências
 - `Task prompt` = o que vale **para essa task** → instrução objetiva, contexto mínimo
