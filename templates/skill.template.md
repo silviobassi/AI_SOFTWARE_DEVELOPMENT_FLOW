@@ -34,7 +34,7 @@
 
 [Instrução clara e direta]
 
-```
+```gherkin
 [Exemplo concreto — código, estrutura de pastas, naming, etc.]
 ```
 
@@ -43,7 +43,7 @@
 [Instrução]
 
 | Elemento | Padrão | Exemplo |
-|---|---|---|
+| --- | --- | --- |
 | [elemento] | [padrão] | [exemplo concreto] |
 
 ### [Seção 3 — ex: Exceções]
@@ -59,7 +59,7 @@
 **Input (situação):** [Descrição do que o agente está fazendo]
 **Output esperado:** [O que o agente deve produzir seguindo esta skill]
 
-```
+```gherkin
 [Exemplo concreto]
 ```
 

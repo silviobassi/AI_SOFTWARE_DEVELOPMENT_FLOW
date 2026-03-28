@@ -1,7 +1,7 @@
 # AI-Assisted Software Development Flow
 
 > Metodologia para desenvolvimento de software com IA — Solo Dev + AI Agent
-> Versão: 1.0 | Data: 2026-03-28
+> Versão: 1.1 | Data: 2026-03-28
 
 ---
 
@@ -13,69 +13,72 @@ flowchart TD
     classDef artifact fill:#0d2b0d,stroke:#4caf50,color:#ffffff
     classDef gate fill:#3d1a00,stroke:#ff8c00,color:#ffffff,font-weight:bold
     classDef optional fill:#1a1a2e,stroke:#7b68ee,color:#cccccc,stroke-dasharray:5 5
-    classDef feedback stroke:#e74c3c,stroke-width:2px,stroke-dasharray:4 4
+    classDef skill fill:#1a0d2e,stroke:#9b59b6,color:#ffffff
+    classDef rule fill:#2e0d0d,stroke:#e74c3c,color:#ffffff
 
     %% FASE 1
     subgraph F1["FASE 1 — ENTENDIMENTO"]
-        A["📄 PRD Alto Nível\n(stakeholder-facing)"]
-        G1{{"✅ Checkpoint 1\nLeitura crítica própria:\nO problema está claro?"}}
-        B["📄 PRD Técnico\n(engineering-facing)"]
-        G2{{"✅ Checkpoint 2\nStack, escopo e restrições\nestão bem definidos?"}}
+        A["📄 PRD Alto Nível (stakeholder-facing)"]
+        G1{{"✅ Checkpoint 1 O problema está claro? Critérios de sucesso mensuráveis?"}}
+        B["📄 PRD Técnico (engineering-facing)"]
+        G2{{"✅ Checkpoint 2 Stack, escopo e RNFs estão bem definidos?"}}
     end
 
     %% FASE 2
     subgraph F2["FASE 2 — ARQUITETURA"]
         C["🏗️ Extração de Arquitetura"]
-        C1["Diagramas\nC4 / Sequência / ER"]
-        C2["Requisitos\nFuncionais e Não Funcionais"]
-        C3["ADRs\n(decisões com justificativa)"]
-        C4["RFCs\n(opcional: mudanças\nsignificativas)"]
-        G3{{"✅ Checkpoint 3\nArquitetura responde\ntodos os RNFs?"}}
+        C1["Diagramas C4 / Sequência / ER"]
+        C2["Requisitos Funcionais e Não Funcionais"]
+        C3["ADRs (decisões com justificativa)"]
+        C4["RFCs (opcional)"]
+        G3{{"✅ Checkpoint 3 Arquitetura responde todos os RNFs? Decisões críticas têm ADR?"}}
     end
 
     %% FASE 3
     subgraph F3["FASE 3 — CONFIGURAÇÃO DO AGENTE"]
-        D["🤖 CLAUDE.md / AGENTS.md\n(contexto permanente do agente)"]
-        E["⚙️ Skills e Rules\n(comportamentos reutilizáveis)"]
+        D["🤖 CLAUDE.md / AGENTS.md (contexto permanente — stack, anti-padrões, refs)"]
+        E1["📘 Skills (.claude/skills/) file-structure obrigatória"]
+        E2["📏 Rules (.claude/rules/) rastreability · spec-before-code · atomic-task"]
     end
 
     %% FASE 4
     subgraph F4["FASE 4 — ESPECIFICAÇÕES"]
-        F["📋 Feature Specs\n(uma por funcionalidade)"]
-        G4{{"✅ Checkpoint 4\nSpec está completa?\nCritérios de aceite definidos?"}}
+        F["📋 Feature Spec [ID]-[nome].spec.md (O QUÊ — requisitos, BDD, contrato)"]
+        G4{{"✅ Checkpoint 4 Spec está completa? Critérios de aceite testáveis? Dependências mapeadas?"}}
     end
 
     %% FASE 5
     subgraph F5["FASE 5 — PLANEJAMENTO DE EXECUÇÃO"]
-        H["🗂️ Plano de Execução por Spec"]
-        H1["DAG de Dependências\nentre Tasks"]
-        H2["Paralelismo\nidentificado"]
-        H3["Testes definidos\npor Task (TDD-first)"]
-        H4["Estimativa de contexto\nnecessário por Task"]
+        H["🗂️ Execution Plan [ID]-execution-plan.md (O COMO — tasks, DAG, prompts)"]
+        H1["DAG de Dependências + Paralelismo"]
+        H2["Testes definidos por Task (TDD-first)"]
+        H3["Prompt base por Task"]
+        H4["Estimativa de Contexto por Task (≤ 5 arquivos)"]
     end
 
     %% FASE 6
     subgraph F6["FASE 6 — IMPLEMENTAÇÃO"]
-        I["💻 Execução pelo Agente\n(task por task)"]
-        I1["Código\nimplementado"]
-        I2["Testes\nescritos"]
-        I3["Rastreabilidade\nspec ↔ código"]
-        J["🔍 Validação Automatizada\nLint + Tests + Build"]
+        I["💻 Execução pelo Agente (task por task — execution plan)"]
+        I1["Código implementado"]
+        I2["Testes escritos"]
+        I3["// spec: ID (RULE-rastreability)"]
+        J["🔍 Validação Automatizada Lint + Tests + Build"]
     end
 
     %% FASE 7
     subgraph F7["FASE 7 — ENTREGA"]
-        K["👁️ Code Review\n(auto-revisão + agente)"]
+        K["👁️ Code Review (auto-revisão + agente vs spec)"]
         L["🚀 Merge + CI/CD"]
-        M["📝 Atualização de ADRs\nse necessário"]
+        M["📝 Atualização de ADRs se necessário"]
     end
 
     %% CONEXÕES PRINCIPAIS
     A --> G1 --> B --> G2
     G2 --> C --> C1 & C2 & C3 & C4
     C1 & C2 & C3 & C4 --> G3
-    G3 --> D --> E
-    E --> F --> G4
+    G3 --> D
+    D --> E1 & E2
+    E1 & E2 --> F --> G4
     G4 --> H --> H1 & H2 & H3 & H4
     H1 & H2 & H3 & H4 --> I
     I --> I1 & I2 & I3
@@ -92,10 +95,26 @@ flowchart TD
 
     %% ESTILOS
     class F1,F2,F3,F4,F5,F6,F7 phase
-    class A,B,C,C1,C2,C3,D,E,F,H,H1,H2,H3,I,I1,I2,I3,J,K,L,M artifact
+    class A,B,C,C1,C2,C3,D,F,H,H1,H2,H3,I,I1,I2,J,K,L,M artifact
     class G1,G2,G3,G4 gate
     class C4,H4 optional
+    class E1 skill
+    class E2,I3 rule
 ```
+
+---
+
+## Separação de Responsabilidades por Artefato
+
+| Artefato | Responde a | Não contém |
+| --- | --- | --- |
+| **CLAUDE.md** | Padrões permanentes (stack, anti-padrões, refs a skills/rules) | Requisitos de feature, lógica de negócio |
+| **Skill** `file-structure` | Naming, estrutura de pastas, padrão arquitetural | Requisitos, constraints globais |
+| **Rule** | Constraint sempre ativa (rastreability, spec-before-code...) | Instruções situacionais |
+| **PRD Técnico** | Requisitos do sistema (RF, RNF, arquitetura) | Tasks, planos de execução |
+| **ADR** | Decisão arquitetural com trade-offs | Instruções de implementação |
+| **Spec** | O QUÊ implementar (requisitos, BDD, contrato) | COMO implementar, tasks, padrões de stack |
+| **Execution Plan** | O COMO executar (tasks, DAG, prompts base) | Requisitos, critérios de aceite |
 
 ---
 
@@ -108,11 +127,13 @@ O fluxo é **escalável**. Para projetos pequenos, algumas etapas são opcionais
 | PRD Alto Nível | Opcional | ✅ | ✅ |
 | PRD Técnico | ✅ Simplificado | ✅ | ✅ Completo |
 | Diagramas | Opcional | ✅ Principais | ✅ Todos |
-| ADRs | 1–2 decisões críticas | ✅ | ✅ Completo |
+| ADRs | 1–2 críticos | ✅ | ✅ Completo |
 | RFCs | ❌ | Opcional | ✅ |
 | CLAUDE.md | ✅ Essencial | ✅ | ✅ |
-| Skills e Rules | Reutilizar existentes | ✅ | ✅ Customizadas |
+| Skill `file-structure` | ✅ Essencial | ✅ | ✅ Completa |
+| Rules base | ✅ 3 padrões | ✅ | ✅ Customizadas |
 | Specs | ✅ Por feature | ✅ | ✅ |
+| Execution Plan | ✅ Simplificado | ✅ | ✅ Completo |
 | CI/CD | Básico | ✅ | ✅ Completo |
 
 ---
@@ -121,20 +142,39 @@ O fluxo é **escalável**. Para projetos pequenos, algumas etapas são opcionais
 
 ```mermaid
 flowchart LR
-    CM["CLAUDE.md\n(contexto permanente\nentre sessões)"]
-    SP["Spec\n(contexto da feature\ncorrente)"]
-    TP["Task Prompt\n(contexto mínimo\nda task)"]
-    MEM["memory/\n(estado da sessão)"]
+    subgraph PERM["Contexto Permanente"]
+        CM["CLAUDE.md (stack · anti-padrões · refs)"]
+        SK["Skills (.claude/skills/)"]
+        RU["Rules (.claude/rules/)"]
+    end
 
-    CM -->|"sempre carregado"| AGT["🤖 Agente"]
-    SP -->|"início de feature"| AGT
-    TP -->|"por task"| AGT
-    MEM -->|"quando relevante"| AGT
+    subgraph FEAT["Contexto de Feature"]
+        SP["Spec [ID]-[nome].spec.md (O QUÊ)"]
+        EP["Execution Plan [ID]-execution-plan.md (O COMO)"]
+    end
+
+    subgraph TASK["Contexto de Task"]
+        TP["Task Prompt (instrução mínima + arquivos da task)"]
+    end
+
+    MEM["memory/ (estado entre sessões)"]
+
+    PERM -->|"sempre carregado"| AGT["🤖 Agente"]
+    SP   -->|"início de feature"| AGT
+    EP   -->|"início de feature"| AGT
+    TP   -->|"por task"| AGT
+    MEM  -->|"quando relevante"| AGT
 ```
 
 **Regra de ouro para economizar tokens:**
 
-- `CLAUDE.md` = o que **sempre** vale → stack, padrões, anti-padrões, estrutura de pastas
-- `Spec` = o que vale **para a feature** → requisitos, aceite, dependências
-- `Task prompt` = o que vale **para essa task** → instrução objetiva, contexto mínimo
-- `memory/` = decisões e estado que precisam **persistir entre sessões**
+| Camada | O que contém | Quando carregar |
+| --- | --- | --- |
+| `CLAUDE.md` + Skills + Rules | Sempre válido — stack, padrões, constraints | Toda sessão (automático) |
+| `Spec` | Válido para esta feature — O QUÊ | Início da feature |
+| `Execution Plan` | Válido para esta feature — O COMO | Início da feature |
+| `Task Prompt` | Instrução mínima + arquivos desta task | Por task |
+| `memory/` | Estado que deve persistir entre sessões | Quando relevante |
+
+> **Sinal de contexto degradado:** agente faz perguntas já respondidas na spec, repete código
+> escrito ou ignora uma rule. Ação: nova sessão com CLAUDE.md + spec + execution plan.

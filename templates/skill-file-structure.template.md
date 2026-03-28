@@ -37,7 +37,7 @@ O agente deve consultar esta skill ANTES de:
 
 > Indicado para: APIs simples, CRUDs, projetos com domínio pouco complexo.
 
-```
+```gherkin
 src/
 ├── [recurso]/               # Ex: users/, products/
 │   ├── [recurso].controller.ts    # HTTP: rotas, validação de input, response
@@ -55,6 +55,7 @@ src/
 ```
 
 **Regras:**
+
 - Lógica de negócio SOMENTE em `*.service.ts`
 - Controller SOMENTE valida input e chama service
 - Repository SOMENTE faz acesso a dados — sem lógica de negócio
@@ -63,7 +64,7 @@ src/
 **Naming:**
 
 | Elemento | Padrão | Exemplo |
-|---|---|---|
+| --- | --- | --- |
 | Arquivo | `kebab-case.ts` | `user-profile.service.ts` |
 | Classe de Service | `[Recurso]Service` | `UserService` |
 | Classe de Controller | `[Recurso]Controller` | `UserController` |
@@ -79,7 +80,7 @@ src/
 > Indicado para: aplicações médias/grandes onde features evoluem independentemente.
 > Cada feature é um "slice" vertical completo — sem camadas horizontais.
 
-```
+```gherkin
 src/
 ├── features/
 │   ├── [feature-name]/            # Ex: create-user/, list-products/
@@ -99,6 +100,7 @@ src/
 ```
 
 **Regras:**
+
 - Cada feature é completamente autocontida
 - Features NÃO importam umas das outras — apenas de `shared/`
 - Handler = único ponto de entrada da feature
@@ -107,7 +109,7 @@ src/
 **Naming:**
 
 | Elemento | Padrão | Exemplo |
-|---|---|---|
+| --- | --- | --- |
 | Diretório de feature | `kebab-case` | `create-user/` |
 | Handler | `[Ação][Recurso]Handler` | `CreateUserHandler` |
 | Command | `[Ação][Recurso]Command` | `CreateUserCommand` |
@@ -122,7 +124,7 @@ src/
 > Indicado para: domínio rico, múltiplas formas de entrada/saída, alta testabilidade.
 > O domínio não depende de nada externo — apenas de si mesmo.
 
-```
+```gherkin
 src/
 ├── domain/                        # Núcleo — sem dependências externas
 │   ├── [entidade]/
@@ -149,6 +151,7 @@ src/
 ```
 
 **Regras:**
+
 - `domain/` NUNCA importa de `adapters/` ou `application/`
 - `application/` importa de `domain/` (ports) — nunca de `adapters/`
 - `adapters/` implementa os ports definidos em `domain/ports/`
@@ -157,7 +160,7 @@ src/
 **Naming:**
 
 | Elemento | Padrão | Exemplo |
-|---|---|---|
+| --- | --- | --- |
 | Entidade | `[Nome].entity.ts` | `User.entity.ts` |
 | Value Object | `[Nome].vo.ts` | `Email.vo.ts` |
 | Port de entrada | `[UseCase]Port` | `CreateUserPort` |
@@ -173,7 +176,7 @@ src/
 > Indicado para: sistemas complexos, múltiplos casos de uso por entidade, necessidade de
 > total independência entre regras de negócio e infraestrutura.
 
-```
+```gherkin
 src/
 ├── entities/                      # Regras de negócio corporativas (mais internas)
 │   └── [entidade]/
@@ -196,6 +199,7 @@ src/
 ```
 
 **Regras:**
+
 - Dependências apontam sempre para dentro (entities ← use-cases ← adapters ← frameworks)
 - Entities não conhecem use-cases, use-cases não conhecem controllers
 - Toda comunicação entre camadas via interfaces (boundaries)
@@ -204,7 +208,7 @@ src/
 **Naming:**
 
 | Elemento | Padrão | Exemplo |
-|---|---|---|
+| --- | --- | --- |
 | Entity | `[Nome].ts` em `entities/` | `User.ts` |
 | Use Case | `[Ação][Recurso]UseCase.ts` | `CreateUserUseCase.ts` |
 | Input Boundary | `[UseCase]Input.ts` | `CreateUserInput.ts` |
@@ -218,7 +222,7 @@ src/
 ## Regras Globais de Naming (todas as arquiteturas)
 
 | Elemento | Padrão |
-|---|---|
+| --- | --- |
 | Nome de arquivo | `kebab-case.ts` |
 | Classe | `PascalCase` |
 | Função / método | `camelCase` |

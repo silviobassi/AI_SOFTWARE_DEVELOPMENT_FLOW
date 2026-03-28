@@ -45,12 +45,14 @@ Qual foi o custo (retrabalho, bug, token waste) que motivou criá-la?]
 3. [Passo 3]
 
 **Exemplo correto:**
-```
+
+```gherkin
 [Exemplo de código, nome de arquivo, comentário, etc. que satisfaz a rule]
 ```
 
 **Exemplo incorreto (violação):**
-```
+
+```gherkin
 [O que o agente NÃO deve fazer]
 ```
 

@@ -20,7 +20,7 @@ Qual RF do PRD técnico ela implementa? (ex: Implementa RF-001, RF-002)]
 
 ## User Story
 
-```
+```text
 Como [tipo de usuário],
 Quero [ação / capacidade],
 Para que [benefício / objetivo].
@@ -54,6 +54,7 @@ Para que [benefício / objetivo].
 > Formato BDD. Cada cenário deve ter cobertura de teste correspondente.
 
 ### Cenário 1: [Nome — caminho feliz]
+
 ```gherkin
 Dado que [pré-condição / estado inicial]
 Quando [ação do usuário ou sistema]
@@ -61,6 +62,7 @@ Então [resultado esperado observável]
 ```
 
 ### Cenário 2: [Nome — caso de erro]
+
 ```gherkin
 Dado que [pré-condição]
 Quando [ação inválida ou estado de erro]
@@ -69,6 +71,7 @@ Então [comportamento esperado do sistema]
 ```
 
 ### Cenário 3: [Nome — caso de borda]
+
 ```gherkin
 Dado que [pré-condição de borda]
 Quando [ação]
@@ -100,7 +103,7 @@ Então [resultado esperado]
 
 ### Endpoint(s) *(se aplicável)*
 
-```
+```gherkin
 [MÉTODO] /api/v1/[recurso]
 Authorization: Bearer <token> | N/A
 
@@ -122,7 +125,8 @@ Response 500: { "error": "INTERNAL_ERROR" }
 ```
 
 ### Eventos / Mensagens *(se aplicável)*
-```
+
+```gherkin
 Emite: [nome-do-evento] → { campo1, campo2 }
 Consome: [nome-do-evento] → handler: [função]
 ```
@@ -150,7 +154,7 @@ CREATE TABLE [tabela] (
 > (`CLAUDE.md` → seção "Skills do Projeto").
 
 | Ação | Arquivo | Notas |
-|---|---|---|
+| --- | --- | --- |
 | Criar | [caminho derivado da skill file-structure] | [responsabilidade] |
 | Modificar | [caminho] | [o que muda] |
 | Criar | [caminho do arquivo de teste] | Cobre os cenários BDD acima |
@@ -164,6 +168,7 @@ CREATE TABLE [tabela] (
 > Estrutura e naming: **skill: file-structure** em `.claude/skills/file-structure.md`.
 >
 > Nota específica desta feature *(preencher apenas se houver exceção ou detalhe único)*:
+
 - [ex: Reutilizar `[ServiçoExistente]` de `shared/[módulo]/` — não criar novo]
 - [ex: Exceção ao padrão X por causa de Y — ver ADR-NNN]
 

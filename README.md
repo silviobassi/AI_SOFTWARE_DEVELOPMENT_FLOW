@@ -11,6 +11,7 @@ Um conjunto de documentos, templates e padrões que definem um fluxo completo de
 de software, desde a coleta de requisitos até a entrega, com IA integrada em cada etapa.
 
 **Objetivos:**
+
 - Minimizar retrabalho via spec-before-code
 - Economizar tokens com contexto bem gerenciado
 - Garantir rastreabilidade vertical (PRD → Spec → Código → Teste)
@@ -20,7 +21,7 @@ de software, desde a coleta de requisitos até a entrega, com IA integrada em ca
 
 ## Estrutura
 
-```
+```gherkin
 AI_Software_Development_Flow/
 ├── README.md
 ├── docs/
@@ -48,13 +49,15 @@ AI_Software_Development_Flow/
 ## Como usar em um novo projeto
 
 ### Fase 1–2: Entendimento + Arquitetura
-```
+
+```flow
 templates/prd-technical.template.md   → docs/prd-technical.md
 templates/adr.template.md             → docs/architecture/decisions/ADR-NNN-titulo.md
 ```
 
 ### Fase 3: Configurar o Agente
-```
+
+```gherkin
 templates/CLAUDE.md.template.md       → CLAUDE.md (raiz do projeto)
 
 templates/skill-file-structure.template.md
@@ -68,14 +71,16 @@ templates/rule.template.md            → .claude/rules/atomic-task.md
 ```
 
 ### Fase 4–5: Especificações + Planejamento
-```
+
+```gherkin
 Para cada feature:
   templates/spec.template.md           → docs/specs/[ID]-[nome].spec.md
   templates/execution-plan.template.md → docs/specs/[ID]-execution-plan.md
 ```
 
 ### Fase 6–7: Implementação + Entrega
-```
+
+```gherkin
 Seguir o execution plan task a task.
 Agente usa: CLAUDE.md + spec + execution plan como contexto.
 ```
@@ -85,7 +90,7 @@ Agente usa: CLAUDE.md + spec + execution plan como contexto.
 ## Separação de Responsabilidades dos Templates
 
 | Template | Responde a | Não contém |
-|---|---|---|
+| --- | --- | --- |
 | `CLAUDE.md` | Padrões permanentes do projeto (stack, anti-padrões, skills, rules) | Requisitos de features, lógica de negócio |
 | `prd-technical` | Requisitos do sistema (RF, RNF, arquitetura) | Plano de execução, tasks |
 | `adr` | Decisão arquitetural com trade-offs | Instruções de implementação |
@@ -110,6 +115,6 @@ Agente usa: CLAUDE.md + spec + execution plan como contexto.
 ## Documentos de Referência
 
 | Documento | Propósito |
-|---|---|
+| --- | --- |
 | [Diagrama do Fluxo](docs/FLOW.md) | Visão visual + fluxo de contexto do agente |
 | [Metodologia Formal](docs/methodology.md) | Fases, princípios, checklists e estrutura de diretórios |

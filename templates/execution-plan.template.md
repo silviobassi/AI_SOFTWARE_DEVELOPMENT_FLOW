@@ -12,7 +12,7 @@
 > Naming, localização e arquitetura: seguir **skill: file-structure** do projeto.
 
 | Ação | Arquivo | Responsabilidade |
-|---|---|---|
+| --- | --- | --- |
 | Criar | [caminho] | [o que este arquivo faz] |
 | Criar | [caminho.spec.ts] | Testes dos cenários BDD da spec |
 | Modificar | [caminho] | [o que muda e por quê] |
@@ -25,12 +25,18 @@
 
 ```mermaid
 flowchart TD
-    T1["Task 1\n[descrição]"]
-    T2["Task 2\n[descrição]"]
-    T3["Task 3\n[descrição]"]
-    T4["Task 4 — Teste\n[descrição]"]
-    T5["Task 5\n[descrição]"]
-    T6["Task 6 — Teste Integração\n[descrição]"]
+    T1["Task 1
+    [descrição]"]
+    T2["Task 2
+    [descrição]"]
+    T3["Task 3
+    [descrição]"]
+    T4["Task 4 — Teste
+    [descrição]"]
+    T5["Task 5
+    [descrição]"]
+    T6["Task 6 — Teste Integração
+    [descrição]"]
 
     T1 --> T2 --> T3
     T3 --> T4 & T5
@@ -110,7 +116,7 @@ flowchart TD
 > Se > 5 arquivos → quebrar a task em partes menores.
 
 | Task | Arquivos de contexto | Qtde | OK? |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Task 1 | CLAUDE.md, skill:file-structure | 2 | ✅ |
 | Task 2 | CLAUDE.md, Task1-output, spec | 3 | ✅ |
 | Task 3 | CLAUDE.md, Task2-output, ADR-NNN | 3 | ✅ |
@@ -125,7 +131,7 @@ flowchart TD
 > Template de prompt para iniciar cada task com o agente.
 > Copiar e ajustar conforme necessário.
 
-```
+```gherkin
 Contexto: projeto [nome], spec [ID].
 Leia: CLAUDE.md (já carregado) e docs/specs/[ID]-[nome].spec.md.
 
@@ -144,7 +150,7 @@ Não avance para próxima task sem minha confirmação.
 > Atualizar durante a implementação.
 
 | Task | Status | Notas |
-|---|---|---|
+| --- | --- | --- |
 | Task 1 | [ ] Pendente | |
 | Task 2 | [ ] Pendente | |
 | Task 3 | [ ] Pendente | |

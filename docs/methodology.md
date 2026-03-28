@@ -14,7 +14,7 @@ Esta metodologia define um processo estruturado para desenvolvimento de software
 **Princípios fundamentais:**
 
 | Princípio | Aplicação no fluxo |
-|---|---|
+| --- | --- |
 | **Spec-before-code** | Nenhuma task de implementação inicia sem spec validada |
 | **Contexto mínimo suficiente** | O agente recebe apenas o contexto necessário para a task atual |
 | **Rastreabilidade vertical** | PRD → Spec → Task → Código → Teste formam uma cadeia rastreável |
@@ -30,6 +30,7 @@ Esta metodologia define um processo estruturado para desenvolvimento de software
 **Objetivo:** Capturar o problema e os requisitos com clareza suficiente para derivar a arquitetura.
 
 #### 1.1 PRD Alto Nível
+
 - **Audiência:** Stakeholders, clientes, você mesmo como PM
 - **Formato:** Narrativo, sem jargão técnico
 - **Conteúdo obrigatório:** Problema, usuários afetados, solução proposta, métricas de sucesso, fora de escopo
@@ -38,6 +39,7 @@ Esta metodologia define um processo estruturado para desenvolvimento de software
 **Checkpoint 1:** O problema está claro? A solução proposta responde ao problema? Os critérios de sucesso são mensuráveis?
 
 #### 1.2 PRD Técnico
+
 - **Audiência:** Você como engenheiro + o agente de IA
 - **Formato:** Estruturado, com seções padronizadas
 - **Conteúdo obrigatório:** Stack, arquitetura de alto nível, RF, RNF, integrações, restrições
@@ -52,6 +54,7 @@ Esta metodologia define um processo estruturado para desenvolvimento de software
 **Objetivo:** Traduzir o PRD técnico em decisões e artefatos de arquitetura rastreáveis.
 
 #### 2.1 Diagramas
+
 - **C4 Nível 1 (Context):** Sistema e atores externos
 - **C4 Nível 2 (Container):** Principais componentes/serviços
 - **Sequência:** Fluxos críticos de negócio
@@ -59,17 +62,20 @@ Esta metodologia define um processo estruturado para desenvolvimento de software
 - **Ferramenta recomendada:** Mermaid (version-controlável)
 
 #### 2.2 Requisitos Funcionais e Não Funcionais
+
 - Derivados do PRD técnico
 - RF: comportamentos observáveis do sistema
 - RNF: constraints de qualidade (performance, segurança, escalabilidade, manutenibilidade)
 
 #### 2.3 ADRs (Architecture Decision Records)
+
 - **Quando criar:** Para cada decisão com trade-offs significativos
 - **Exemplos:** Escolha de banco de dados, estratégia de autenticação, padrão de comunicação entre serviços
 - **Template:** `templates/adr.template.md`
 - **Localização padrão:** `docs/architecture/decisions/ADR-NNN-titulo.md`
 
 #### 2.4 RFCs *(opcional, projetos médios/grandes)*
+
 - Propostas de mudanças arquiteturais significativas
 - Útil quando você quer registrar o raciocínio antes de executar
 
@@ -82,9 +88,11 @@ Esta metodologia define um processo estruturado para desenvolvimento de software
 **Objetivo:** Preparar o agente para operar com o contexto correto e comportamento previsível.
 
 #### 3.1 CLAUDE.md / AGENTS.md
+
 O arquivo mais importante do fluxo. Lido em toda sessão pelo agente.
 
 **Seções obrigatórias:**
+
 - Visão geral do projeto (2–3 linhas)
 - Stack tecnológica com versões
 - Estrutura de pastas comentada
@@ -99,6 +107,7 @@ O arquivo mais importante do fluxo. Lido em toda sessão pelo agente.
 #### 3.2 Skills e Rules
 
 **Skills** — instruções reutilizáveis que o agente consulta sob demanda:
+
 - Definem **como** executar um tipo de tarefa (criar arquivo, escrever teste, nomear módulo)
 - Escopo: global (qualquer projeto) ou específico do projeto
 - A skill mais importante de todo projeto: **`file-structure`** — define o padrão arquitetural, naming e estrutura de pastas
@@ -107,12 +116,14 @@ O arquivo mais importante do fluxo. Lido em toda sessão pelo agente.
 - **Localização no projeto:** `.claude/skills/[nome].md`
 
 **Rules** — constraints que o agente SEMPRE deve cumprir, sem exceção:
+
 - Definem **o que nunca violar** independentemente do contexto
 - Exemplos prontos para criar: `RULE-rastreability`, `RULE-spec-before-code`, `RULE-atomic-task`
 - **Template:** `templates/rule.template.md`
 - **Localização no projeto:** `.claude/rules/[nome].md`
 
 **Princípio de extração:**
+
 - Instrução dada **2x** → virar Rule (constraint permanente)
 - Instrução dada **3x** → virar Skill (comportamento reutilizável)
 - Padrão de stack (lib, framework, convenção) → sempre em CLAUDE.md, nunca em specs
@@ -124,9 +135,11 @@ O arquivo mais importante do fluxo. Lido em toda sessão pelo agente.
 **Objetivo:** Definir o "quê" de cada feature antes do "como". É a principal alavanca contra retrabalho.
 
 #### Estrutura de uma Spec
+
 Cada feature tem sua própria spec. A spec é o contrato entre você e o agente.
 
 **Conteúdo obrigatório:**
+
 - ID único (ex: `AUTH-001`)
 - Contexto e motivação
 - Requisitos funcionais (lista numerada)
@@ -150,20 +163,24 @@ Cada feature tem sua própria spec. A spec é o contrato entre você e o agente.
 **Localização no projeto:** `docs/specs/[ID]-execution-plan.md` (arquivo separado da spec)
 
 #### 5.1 Breakdown em Tasks Atômicas
+
 - Cada task deve ser executável em uma única sessão de agente (ver RULE-atomic-task)
 - Tasks com escopo bem delimitado: um arquivo ou uma responsabilidade
 - Nunca misturar responsabilidades: "criar service E escrever testes" = 2 tasks separadas
 
 #### 5.2 DAG de Dependências
+
 - Mapear quais tasks bloqueiam outras
 - Identificar quais podem rodar em paralelo
 - O execution plan inclui diagrama Mermaid do DAG e tabela de status
 
 #### 5.3 Testes First
+
 - Para cada task de implementação, a task de teste é planejada junto
 - Critérios de aceite BDD da spec → cenários de teste concretos no execution plan
 
 #### 5.4 Estimativa de Contexto por Task
+
 - Mapear quais arquivos o agente precisa ler para cada task
 - Se > 5 arquivos → quebrar a task em partes menores
 - O execution plan inclui tabela de estimativa de contexto
@@ -176,15 +193,18 @@ Cada feature tem sua própria spec. A spec é o contrato entre você e o agente.
 **Objetivo:** Executar o plano com o agente, mantendo rastreabilidade e qualidade.
 
 #### 6.1 Execução pelo Agente
+
 - Iniciar cada task passando: a spec da feature + a task específica + contexto mínimo necessário
 - O agente tem CLAUDE.md como contexto permanente
 - **Não** reutilizar sessões longas demais — janela de contexto contamina
 
 #### 6.2 Rastreabilidade Spec ↔ Código
+
 - Convenção definida em **RULE-rastreability** (`.claude/rules/rastreability.md`)
 - Spec atualizada com referência aos arquivos criados/modificados após conclusão
 
 #### 6.3 Validação Automatizada
+
 - Lint + formatação
 - Testes unitários + integração
 - Build
@@ -197,14 +217,17 @@ Cada feature tem sua própria spec. A spec é o contrato entre você e o agente.
 **Objetivo:** Garantir qualidade final e manter a documentação atualizada.
 
 #### 7.1 Code Review
+
 - Auto-revisão com checklist: lógica, segurança, performance, manutenibilidade
 - Usar o agente para review secundário: "revise este código contra a spec AUTH-001"
 
 #### 7.2 Merge + CI/CD
+
 - Pipeline obrigatório antes do merge
 - Estratégia de branch: feature branches por spec
 
 #### 7.3 Manutenção de ADRs
+
 - Se a implementação divergiu de decisões arquiteturais, atualizar o ADR
 - Registrar o porquê da divergência
 
@@ -214,7 +237,7 @@ Cada feature tem sua própria spec. A spec é o contrato entre você e o agente.
 
 A maior fonte de desperdício de tokens é contexto mal gerenciado. Hierarquia de contexto:
 
-```
+```gherkin
 CLAUDE.md          → contexto permanente (sempre carregado)
   └── Spec         → contexto de feature (carregado por feature)
        └── Task    → contexto de task (instrução + arquivos mínimos)
@@ -230,6 +253,7 @@ CLAUDE.md          → contexto permanente (sempre carregado)
 5. **Não repita instruções** — se você repetiu 2x, vire uma Rule; se 3x, vire uma Skill
 
 ### Sinais de Contexto Degradado
+
 - Agente faz perguntas já respondidas na spec
 - Agente repete código já escrito
 - Respostas ficam genéricas ou inconsistentes com decisões anteriores
@@ -240,7 +264,7 @@ CLAUDE.md          → contexto permanente (sempre carregado)
 
 ## 4. Rastreabilidade Vertical
 
-```
+```gherkin
 PRD Técnico (requisito)
   └── ADR (decisão arquitetural)
        └── Spec (feature spec)
@@ -250,6 +274,7 @@ PRD Técnico (requisito)
 ```
 
 Cada artefato referencia o anterior. Isso garante:
+
 - Manutenibilidade: saber **por que** o código existe
 - Auditabilidade: rastrear mudanças até o requisito original
 - Onboarding: novos contextos (sua própria sessão futura) entendem o sistema rapidamente
@@ -258,7 +283,7 @@ Cada artefato referencia o anterior. Isso garante:
 
 ## 5. Estrutura de Diretórios Recomendada
 
-```
+```gherkin
 project-root/
 ├── CLAUDE.md                              # Contexto permanente do agente
 ├── docs/
@@ -285,27 +310,32 @@ project-root/
 ## 6. Checklist de Qualidade por Fase
 
 ### Antes de avançar da Fase 1 → 2
+
 - [ ] Problema claramente definido
 - [ ] Stack e restrições documentadas
 - [ ] RNFs identificados (performance, segurança, escalabilidade)
 
 ### Antes de avançar da Fase 2 → 3
+
 - [ ] Diagramas cobrem os fluxos críticos
 - [ ] Toda decisão com trade-off tem ADR
 - [ ] Arquitetura responde todos os RNFs
 
 ### Antes de avançar da Fase 3 → 4
+
 - [ ] CLAUDE.md tem anti-padrões explícitos
 - [ ] Skill `file-structure` criada com arquitetura e naming do projeto
 - [ ] Rules básicas criadas: `RULE-rastreability`, `RULE-spec-before-code`, `RULE-atomic-task`
 - [ ] Skills e Rules referenciadas no CLAUDE.md
 
 ### Antes de avançar da Fase 4 → 5
+
 - [ ] Spec tem critérios de aceite testáveis
 - [ ] Dependências entre specs mapeadas
 - [ ] Fora de escopo explícito
 
 ### Antes de avançar da Fase 5 → 6
+
 - [ ] Execution plan criado em `docs/specs/[ID]-execution-plan.md`
 - [ ] Tasks são atômicas (escopo de 1 sessão) — ver RULE-atomic-task
 - [ ] DAG de dependências documentado no execution plan
@@ -313,6 +343,7 @@ project-root/
 - [ ] Prompts base por task documentados no execution plan
 
 ### Antes de merge (Fase 7)
+
 - [ ] Todos os testes passando
 - [ ] Lint e build sem erros
 - [ ] Code review concluído
