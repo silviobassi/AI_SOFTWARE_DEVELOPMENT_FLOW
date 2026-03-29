@@ -31,7 +31,8 @@ AI_Software_Development_Flow/
     │
     │  ── PROJETO ──────────────────────────────
     ├── CLAUDE.md.template.md                  # Contexto permanente do agente (Skills + Rules)
-    ├── prd-technical.template.md              # PRD Técnico
+    ├── prd-highlevel.template.md              # PRD Alto Nível (stakeholder-facing, visão de produto)
+    ├── prd-technical.template.md              # PRD Técnico (engineering-facing, stack e RNFs)
     ├── adr.template.md                        # Architecture Decision Record
     │
     │  ── FEATURE ──────────────────────────────
@@ -51,6 +52,7 @@ AI_Software_Development_Flow/
 ### Fase 1–2: Entendimento + Arquitetura
 
 ```flow
+templates/prd-highlevel.template.md   → docs/prd-highlevel.md
 templates/prd-technical.template.md   → docs/prd-technical.md
 templates/adr.template.md             → docs/architecture/decisions/ADR-NNN-titulo.md
 ```
@@ -92,7 +94,8 @@ Agente usa: CLAUDE.md + spec + execution plan como contexto.
 | Template | Responde a | Não contém |
 | --- | --- | --- |
 | `CLAUDE.md` | Padrões permanentes do projeto (stack, anti-padrões, skills, rules) | Requisitos de features, lógica de negócio |
-| `prd-technical` | Requisitos do sistema (RF, RNF, arquitetura) | Plano de execução, tasks |
+| `prd-highlevel` | Visão de produto (problema, personas, epics, KPIs, roadmap) | Stack, arquitetura, requisitos técnicos |
+| `prd-technical` | Requisitos do sistema (RF, RNF, arquitetura, stack) | Plano de execução, tasks, visão de negócio |
 | `adr` | Decisão arquitetural com trade-offs | Instruções de implementação |
 | `spec` | O QUÊ implementar (contrato da feature) | COMO implementar, tasks, padrões de stack |
 | `execution-plan` | COMO executar (tasks, DAG, prompts) | Requisitos, critérios de aceite |
@@ -106,7 +109,7 @@ Agente usa: CLAUDE.md + spec + execution plan como contexto.
 
 1. **Spec-before-code** — nenhuma implementação sem spec validada
 2. **Contexto mínimo suficiente** — agente recebe só o que precisa para a task atual
-3. **Rastreabilidade vertical** — PRD → Spec → Código → Teste formam cadeia rastreável
+3. **Rastreabilidade vertical** — PRD Alto Nível → PRD Técnico → Spec → Código → Teste formam cadeia rastreável
 4. **Decisões documentadas** — todo trade-off vira ADR com justificativa
 5. **Extrair para reutilizar** — instrução repetida 2x vira Rule; 3x vira Skill; padrão de stack vai para CLAUDE.md
 

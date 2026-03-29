@@ -33,10 +33,23 @@ Esta metodologia define um processo estruturado para desenvolvimento de software
 
 - **Audiência:** Stakeholders, clientes, você mesmo como PM
 - **Formato:** Narrativo, sem jargão técnico
-- **Conteúdo obrigatório:** Problema, usuários afetados, solução proposta, métricas de sucesso, fora de escopo
-- **Template:** `templates/prd-business.template.md` *(futuro)*
+- **Conteúdo obrigatório:** Problema, personas afetadas, solução proposta (sem tecnologia), epics, KPIs de negócio, riscos, roadmap e fora de escopo
+- **Template:** `templates/prd-highlevel.template.md`
 
-**Checkpoint 1:** O problema está claro? A solução proposta responde ao problema? Os critérios de sucesso são mensuráveis?
+**Seções principais:**
+
+| Seção | Propósito |
+| --- | --- |
+| Visão do Produto | Problema, personas, contexto de mercado |
+| Solução Proposta | O que muda para o usuário (antes/depois) |
+| Objetivos de Negócio | Metas mensuráveis (OKR-friendly) |
+| Escopo | O que entra e o que fica fora da v1 |
+| Epics | Grandes blocos de funcionalidade (sem detalhe técnico) |
+| Critérios de Sucesso | KPIs que confirmam o produto funcionou |
+| Riscos de Negócio | Probabilidade, impacto, mitigação |
+| Linha do Tempo | Marcos de alto nível |
+
+**Checkpoint 1:** O problema está claro? A solução proposta responde ao problema? Os critérios de sucesso são mensuráveis? Personas identificadas? Escopo v1 definido?
 
 #### 1.2 PRD Técnico
 
@@ -265,12 +278,13 @@ CLAUDE.md          → contexto permanente (sempre carregado)
 ## 4. Rastreabilidade Vertical
 
 ```gherkin
-PRD Técnico (requisito)
-  └── ADR (decisão arquitetural)
-       └── Spec (feature spec)
-            └── Task (unidade de implementação)
-                 └── Código (arquivo + comentário spec: ID)
-                      └── Teste (cenário derivado do critério de aceite)
+PRD Alto Nível (visão de negócio — problema, epics, KPIs)
+  └── PRD Técnico (requisitos de sistema — RF, RNF, stack)
+       └── ADR (decisão arquitetural — trade-offs e justificativas)
+            └── Spec (feature spec — O QUÊ implementar)
+                 └── Task (unidade atômica de implementação)
+                      └── Código (arquivo + comentário spec: ID)
+                           └── Teste (cenário derivado do critério de aceite)
 ```
 
 Cada artefato referencia o anterior. Isso garante:
@@ -287,7 +301,8 @@ Cada artefato referencia o anterior. Isso garante:
 project-root/
 ├── CLAUDE.md                              # Contexto permanente do agente
 ├── docs/
-│   ├── prd-technical.md                   # PRD técnico do projeto
+│   ├── prd-highlevel.md                   # PRD Alto Nível (visão de produto, stakeholder-facing)
+│   ├── prd-technical.md                   # PRD Técnico (engenharia, stack, RF/RNF)
 │   ├── architecture/
 │   │   ├── diagrams/                      # Diagramas Mermaid (C4, sequência, ER)
 │   │   └── decisions/                     # ADRs (ADR-001-titulo.md)
@@ -311,9 +326,19 @@ project-root/
 
 ### Antes de avançar da Fase 1 → 2
 
-- [ ] Problema claramente definido
+**PRD Alto Nível (Checkpoint 1):**
+- [ ] Problema claramente definido (quem sofre, qual impacto)
+- [ ] Personas identificadas
+- [ ] Solução proposta responde ao problema (sem detalhe técnico)
+- [ ] Epics de alto nível listados
+- [ ] KPIs de negócio definidos e mensuráveis
+- [ ] Escopo v1 definido (dentro e fora)
+- [ ] Riscos de negócio mapeados
+
+**PRD Técnico (Checkpoint 2):**
 - [ ] Stack e restrições documentadas
 - [ ] RNFs identificados (performance, segurança, escalabilidade)
+- [ ] Requisitos funcionais derivados dos epics do PRD Alto Nível
 
 ### Antes de avançar da Fase 2 → 3
 

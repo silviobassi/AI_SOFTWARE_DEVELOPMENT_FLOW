@@ -4,6 +4,7 @@
 > **Data:** YYYY-MM-DD
 > **Status:** [Rascunho / Em Revisão / Aprovado]
 > **Autor:** [Nome]
+> **Derivado de:** `docs/prd-highlevel.md` — Epics: [EP-001, EP-002, ...]
 
 ---
 
@@ -72,13 +73,14 @@ C4Context
 
 ## 4. Requisitos Funcionais
 
-> Formato: RF-NNN — [descrição observável do comportamento]
+> Derivados dos Epics do PRD Alto Nível (`docs/prd-highlevel.md`).
+> Formato: RF-NNN — [descrição observável do comportamento] — referencia Epic EP-NNN
 
-| ID | Requisito | Prioridade |
-| --- | --- | --- |
-| RF-001 | [O sistema deve permitir que usuários se cadastrem com e-mail e senha] | Alta |
-| RF-002 | [O sistema deve enviar e-mail de confirmação após cadastro] | Alta |
-| RF-003 | [O sistema deve permitir login com Google OAuth] | Média |
+| ID | Requisito | Prioridade | Epic |
+| --- | --- | --- | --- |
+| RF-001 | [O sistema deve permitir que usuários se cadastrem com e-mail e senha] | Alta | EP-001 |
+| RF-002 | [O sistema deve enviar e-mail de confirmação após cadastro] | Alta | EP-001 |
+| RF-003 | [O sistema deve permitir login com Google OAuth] | Média | EP-001 |
 
 ---
 
@@ -172,7 +174,7 @@ erDiagram
 
 ## 10. Referências
 
+- PRD Alto Nível: `docs/prd-highlevel.md`
 - ADRs: `docs/architecture/decisions/`
 - Specs de features: `docs/specs/`
 - Diagramas: `docs/architecture/diagrams/`
-- PRD de negócio: `docs/prd-business.md` *(se existir)*

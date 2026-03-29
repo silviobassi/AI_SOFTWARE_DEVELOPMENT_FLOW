@@ -109,12 +109,13 @@ flowchart TD
 | Artefato | Responde a | Não contém |
 | --- | --- | --- |
 | **CLAUDE.md** | Padrões permanentes (stack, anti-padrões, refs a skills/rules) | Requisitos de feature, lógica de negócio |
-| **Skill** `file-structure` | Naming, estrutura de pastas, padrão arquitetural | Requisitos, constraints globais |
-| **Rule** | Constraint sempre ativa (rastreability, spec-before-code...) | Instruções situacionais |
-| **PRD Técnico** | Requisitos do sistema (RF, RNF, arquitetura) | Tasks, planos de execução |
+| **PRD Alto Nível** | Visão de produto — problema, personas, epics, KPIs, roadmap | Stack, arquitetura, requisitos técnicos |
+| **PRD Técnico** | Requisitos do sistema (RF, RNF, arquitetura, stack) | Tasks, visão de negócio, roadmap |
 | **ADR** | Decisão arquitetural com trade-offs | Instruções de implementação |
 | **Spec** | O QUÊ implementar (requisitos, BDD, contrato) | COMO implementar, tasks, padrões de stack |
 | **Execution Plan** | O COMO executar (tasks, DAG, prompts base) | Requisitos, critérios de aceite |
+| **Skill** `file-structure` | Naming, estrutura de pastas, padrão arquitetural | Requisitos, constraints globais |
+| **Rule** | Constraint sempre ativa (rastreability, spec-before-code...) | Instruções situacionais |
 
 ---
 
@@ -175,6 +176,8 @@ flowchart LR
 | `Execution Plan` | Válido para esta feature — O COMO | Início da feature |
 | `Task Prompt` | Instrução mínima + arquivos desta task | Por task |
 | `memory/` | Estado que deve persistir entre sessões | Quando relevante |
+
+> **Cadeia de rastreabilidade:** PRD Alto Nível → PRD Técnico → ADR → Spec → Task → Código → Teste
 
 > **Sinal de contexto degradado:** agente faz perguntas já respondidas na spec, repete código
 > escrito ou ignora uma rule. Ação: nova sessão com CLAUDE.md + spec + execution plan.
